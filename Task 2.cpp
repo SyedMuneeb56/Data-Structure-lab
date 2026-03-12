@@ -1,48 +1,57 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
+class Employee
+{
+public:
+    virtual float calculateSalary() = 0;   
+};
 
-template <typename T>
-int linearSearch(T arr[], T key, int size) {
-    for (int i = 0; i < size; i++) {
-        if (arr[i] == key) {
-            return i;  
-        }
+
+class FullTimeEmployee : public Employee
+{
+private:
+    float salary;
+
+public:
+    FullTimeEmployee(float s)   
+    {
+        salary = s;
     }
-    return -1;  
-}
 
-
-template <typename T>
-void displaySearchResult(int index, T key) {
-    if (index != -1) {
-        cout << "Value \"" << key << "\" found at index: " << index << endl;
+    float calculateSalary()
+    {
+        return salary;
     }
-    else {
-        cout << "Value \"" << key << "\" not found in the array." << endl;
+};
+
+
+class PartTimeEmployee : public Employee
+{
+private:
+    int hours;
+    float rate;
+
+public:
+    PartTimeEmployee(int h, float r)  
+    {
+        hours = h;
+        rate = r;
     }
-}
 
-int main() {
+    float calculateSalary()
+    {
+        return hours * rate;
+    }
+};
 
-   
-    int intArray[5] = { 64, 25, 12, 22, 11 };
-    int intKey = 12;
-    int intIndex = linearSearch(intArray, intKey, 5);
-    displaySearchResult(intIndex, intKey);
+int main()
+{
+    FullTimeEmployee emp1(50000);   
+    PartTimeEmployee emp2(20, 500); 
 
-   
-    float floatArray[4] = { 3.14, 2.71, 1.62, 0.57 };
-    float floatKey = 1.62;
-    int floatIndex = linearSearch(floatArray, floatKey, 4);
-    displaySearchResult(floatIndex, floatKey);
-
-    
-    string stringArray[4] = { "apple", "orange", "banana", "grape" };
-    string stringKey = "banana";
-    int stringIndex = linearSearch(stringArray, stringKey, 4);
-    displaySearchResult(stringIndex, stringKey);
+    cout << "Full Time Employee Salary: " << emp1.calculateSalary() << endl;
+    cout << "Part Time Employee Salary: " << emp2.calculateSalary() << endl;
 
     return 0;
 }

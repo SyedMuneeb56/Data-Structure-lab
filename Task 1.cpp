@@ -1,63 +1,58 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 
-template <typename T, int N>
-void selectionSort(T(&A)[N])
+class Shape
 {
-    for (int i = 0; i < N - 1; i++)
-    {
-        int Swapping = i;
-
-        for (int j = i + 1; j < N; j++)
-        {
-            if (A[j] < A[Swapping])
-            {
-                Swapping = j;
-            }
-        }
-
-        
-        T temp = A[i];
-        A[i] = A[Swapping];
-        A[Swapping] = temp;
-    }
-}
+public:
+    virtual float area() = 0;   
+};
 
 
-template <typename T, int N>
-void displayArray(T(&A)[N])
+class Circle : public Shape
 {
-    for (int i = 0; i < N; i++)
+private:
+    float radius;
+
+public:
+    Circle(float r)   
     {
-        cout << A[i] << " ";
+        radius = r;
     }
-    cout << endl;
-}
+
+    float area()      
+    {
+        return 3.14 * radius * radius;
+    }
+};
+
+
+class Rectangle : public Shape
+{
+private:
+    float length;
+    float width;
+
+public:
+    Rectangle(float l, float w)   
+    {
+        length = l;
+        width = w;
+    }
+
+    float area()                 
+    {
+        return length * width;
+    }
+};
 
 int main()
 {
-    
-    int intArray[5] = { 06, 57, 42, 70, 34 };
-    
-    cout << "Original integer array: ";
-    displayArray(intArray);
+    Circle c(5);          
+    Rectangle r(4, 6);    
 
-    
-    selectionSort(intArray);
-    cout << "Sorted integer array: ";
-    displayArray(intArray);
-
-    
-    string stringArray[4] = { "mango", "guava", "cherry", "apple" };
-    cout << "\nOriginal string array: ";
-    displayArray(stringArray);
-
-   
-    selectionSort(stringArray);
-    cout << "Sorted string array: ";
-    displayArray(stringArray);
+    cout << "Area of Circle = " << c.area() << endl;
+    cout << "Area of Rectangle = " << r.area() << endl;
 
     return 0;
 }
